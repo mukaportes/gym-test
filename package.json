@@ -1,0 +1,21 @@
+{
+  "name": "gym-test",
+  "version": "1.0.0",
+  "description": "Gympass Test",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/index.js --harmony-async-await",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mukaportes/gym-test.git"
+  },
+  "author": "Murilo Portescheller <@mukaportes>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mukaportes/gym-test/issues"
+  },
+  "homepage": "https://github.com/mukaportes/gym-test#readme",
+  "devDependencies": {}
+}
