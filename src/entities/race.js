@@ -5,6 +5,8 @@ const Race = function (race) {
     return drivers[lap.pilotId].lapNumber > drivers[lap.pilotId].lapNumber;
   }
 
+  this.sortBy
+
   this.getResult = function () {
     const drivers = {};
     const { isLapBigger } = this;
