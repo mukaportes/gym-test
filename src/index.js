@@ -4,7 +4,9 @@ const Race = require('./entities/race');
 
 const run = async function() {
   const raceLaps = await getRaceLogs(Lap);
-  new Race(raceLaps).getResult();
+  const race = new Race(raceLaps)
+  race.getResult();
+  race.getPilotsBestLaps();
 }
 
 run()
