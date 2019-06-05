@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node src/index.js --harmony-async-await",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest --config jest-config.json --forceExit"
   },
   "repository": {
     "type": "git",
@@ -17,5 +17,10 @@
     "url": "https://github.com/mukaportes/gym-test/issues"
   },
   "homepage": "https://github.com/mukaportes/gym-test#readme",
-  "devDependencies": {}
+  "devDependencies": {
+    "jest": "^24.8.0"
+  },
+  "dependencies": {
+    "faker": "^4.1.0"
+  }
 }
