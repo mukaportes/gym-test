@@ -14,10 +14,10 @@ const Race = function (race) {
     return getTimeInSeconds(lapStartArray) + getTimeInSeconds([0, ...lapLengthArray]);
   };
 
-  this.isLapNumberSmaller = function (pilots, lap) {
+  this.isLapTimeSmaller = function (pilots, lap) {
     const currentLapTime = getTimeComponents(pilots[lap.pilotId].lapTime);
     const newLapTime = getTimeComponents(lap.lapTime);
-    
+
     return getTimeInSeconds([0, ...newLapTime]) < getTimeInSeconds([0, ...currentLapTime]);
   }
 
@@ -67,15 +67,15 @@ const Race = function (race) {
       }
     });
 
-    console.log('Result: ', this.sortPilotsAndFormat(pilots));
+    console.log('Result: ', JSON.stringify(this.sortPilotsAndFormat(pilots), null, 2));
   }
 
-  this.getPilotsBestLaps = function() {
+  this.getPilotsBestLaps = function () {
     const pilots = {};
-    const { isLapNumberSmaller } = this;
+    const { isLapTimeSmaller } = this;
 
     this.race.forEach(function (lap) {
-      if (pilots[lap.pilotId] && isLapNumberSmaller(pilots, lap)) {
+      if (pilots[lap.pilotId] && isLapTimeSmaller(pilots, lap)) {
         pilots[lap.pilotId].lapTime = lap.lapTime;
         pilots[lap.pilotId].lapNumber = lap.lapNumber;
       }
@@ -89,11 +89,59 @@ const Race = function (race) {
       }
     });
 
-    const formattedPilots = Object.keys(pilots).map(function(pilot) {
+    const formattedPilots = Object.keys(pilots).map(function (pilot) {
       return { pilotId: pilot, ...pilots[pilot] };
     });
 
-    console.log('Pilots Best Laps: ', formattedPilots);
+    console.log('Pilots Best Laps: ', JSON.stringify(formattedPilots, null, 2));
+  }
+
+  this.getRaceBestLap = function () {
+    let bestLap;
+
+    this.race.forEach(function (lap) {
+      if (!bestLap) {
+        bestLap = lap;
+      } else {
+        const bestLapTime = getTimeComponents(bestLap.lapTime);
+        const currentLapTime = getTimeComponents(lap.lapTime);
+        const isCurrentBetter = getTimeInSeconds([0, currentLapTime]) > getTimeInSeconds([0, bestLapTime])
+
+        bestLap = isCurrentBetter ? lap : bestLap;
+      }
+    });
+
+    console.log('Race Best Lap: ', JSON.stringify(bestLap, null, 2));
+  }
+
+  this.getPilotsAverageSpeed = function () {
+    const pilots = {};
+
+    this.race.forEach(function (lap) {
+      if (pilots[lap.pilotId]) {
+        pilots[lap.pilotId].speed = Number(pilots[lap.pilotId].speed)
+          + Number(lap.lapAverageSpeed);
+        pilots[lap.pilotId].laps += 1
+      }
+
+      if (!pilots[lap.pilotId]) {
+        pilots[lap.pilotId] = {
+          pilotName: lap.pilotName,
+          speed: lap.lapAverageSpeed,
+          laps: 1,
+        };
+      }
+    });
+
+    const formattedPilots = Object.keys(pilots).map(function(pilot) {
+      return {
+        pilotId: pilot,
+        pilotName: pilots[pilot].pilotName,
+        raceAverageSpeed: (pilots[pilot].speed / pilots[pilot].laps),
+      };
+    });
+
+    console.log('Pilots Race Average Speed: ', JSON.stringify(formattedPilots, null, 2));
   }
 }
 

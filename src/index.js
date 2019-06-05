@@ -7,6 +7,8 @@ const run = async function() {
   const race = new Race(raceLaps)
   race.getResult();
   race.getPilotsBestLaps();
+  race.getRaceBestLap();
+  race.getPilotsAverageSpeed();
 }
 
 run()
