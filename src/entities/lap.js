@@ -1,5 +1,3 @@
-const { getTimeComponents, getTimeInSeconds } = require('../modules/time');
-
 const Lap = function ([
   lapStart, pilotId, pilotName, lapNumber, lapTime, lapAverageSpeed,
 ]) {
